@@ -8,7 +8,7 @@ export const BettaSchema = z.object({
   stockLevel: z.number().int().nonnegative().openapi({ example: 10 }),
   sku: z.string().min(3).max(100).openapi({ example: "BW-BR-1" }),
   variant: z
-    .enum(["Plakat", "Halfmoon", "WildBetta"])
+    .enum(["plakat", "halfmoon", "wild-betta"])
     .openapi({ example: "Plakat" }),
   baseColor: z
     .enum(["black", "white", "red", "blue", "yellow", "green"])
@@ -21,8 +21,8 @@ export const BettaSchema = z.object({
     waterQuality: z.object({
       temperatureCelcius: z.number().min(1).max(30).openapi({ example: 27 }),
       phRange: z.object({
-        min: z.number(),
-        max: z.number(),
+        min: z.number().openapi({ example: 6 }),
+        max: z.number().openapi({ example: 7 }),
       }),
     }),
     environment: z.object({
@@ -71,10 +71,13 @@ export const BettaSchema = z.object({
   }),
   customerReview: z.array(
     z.object({
-      customerName: z.string(),
-      customerImage: z.string(),
-      customerRating: z.number().min(1).max(5),
-      comment: z.string(),
+      customerName: z.string().openapi({ example: "Agus" }),
+      customerImage: z.string().openapi({
+        example:
+          "https://bjjyofiaetiwriksopsx.supabase.co/storage/v1/object/public/bettas-images/bluerim-customer-001.jpg",
+      }),
+      customerRating: z.number().min(1).max(5).openapi({ example: 5 }),
+      comment: z.string().openapi({ example: "very good fish" }),
     }),
   ),
 });
