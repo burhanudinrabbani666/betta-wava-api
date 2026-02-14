@@ -1,9 +1,23 @@
-import { Hono } from 'hono'
+import { logger } from "hono/logger";
+import { OpenAPIHono } from "@hono/zod-openapi";
+import { Scalar } from "@scalar/hono-api-reference";
+import { bettasRoute } from "./bettas/route";
 
-const app = new Hono()
+const app = new OpenAPIHono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.use(logger());
 
-export default app
+app.route("/bettas", bettasRoute);
+
+app.doc("/openapi.json", {
+  openapi: "3.0.0",
+  info: {
+    version: "1.0.0",
+    title: "Betta Wava API",
+    description: "RESTful API for BETTA WAVA e-commerce",
+  },
+});
+
+app.get("/", Scalar({ url: "/openapi.json" }));
+
+export default app;
