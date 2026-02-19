@@ -17,58 +17,22 @@ export const BettaSchema = z.object({
     .enum(["a", "competition", "breeding"])
     .openapi({ example: "competition" }),
   gender: z.enum(["male", "female"]),
-  careGuide: z.object({
-    waterQuality: z.object({
-      temperatureCelcius: z.number().min(1).max(30).openapi({ example: 27 }),
-      phRange: z.object({
-        min: z.number().openapi({ example: 6 }),
-        max: z.number().openapi({ example: 7 }),
-      }),
-    }),
-    environment: z.object({
-      aquariumMinSize: z.object({
-        widthCm: z.number().min(3).max(100).positive().openapi({ example: 20 }),
-        heightCm: z
-          .number()
-          .min(3)
-          .max(100)
-          .positive()
-          .openapi({ example: 20 }),
-      }),
-    }),
-    maintenance: z.object({
-      daily: z
-        .string()
-        .min(3)
-        .max(500)
-        .openapi({ example: "Flerring for 15 minutes" }),
-      weekly: z
-        .string()
-        .min(3)
-        .max(500)
-        .openapi({ example: "Change 50% or Full of water" }),
-    }),
-    diet: z.object({
-      feed: z.string().min(3).max(100).openapi({ example: "1 - 2 daily" }),
-      foodType: z
-        .string()
-        .min(3)
-        .max(100)
-        .openapi({ example: "Daphnia magna" }),
-    }),
-    medicine: z.object({
-      nature: z.string().min(3).max(100).openapi({ example: "cattapa leaves" }),
-      chemical: z
-        .string()
-        .min(3)
-        .max(100)
-        .openapi({ example: "methylene blue" }),
-    }),
-  }),
-  image: z.string().url().openapi({
-    example:
-      "https://bjjyofiaetiwriksopsx.supabase.co/storage/v1/object/public/bettas-images/bluerim-001.jpg",
-  }),
+  temperatureCelcius: z.number().min(1).max(30).openapi({ example: 27 }),
+  phMin: z.number().openapi({ example: 6 }),
+  phMax: z.number().openapi({ example: 6 }),
+  widthCm: z.number().min(3).max(100).positive().openapi({ example: 20 }),
+  HeightCm: z.number().min(3).max(100).positive().openapi({ example: 20 }),
+  daily: z
+    .string()
+    .min(3)
+    .max(500)
+    .openapi({ example: "Flerring for 15 minutes" }),
+  feed: z.string().min(3).max(100).openapi({ example: "1 - 2 daily" }),
+  foodType: z.string().min(3).max(100).openapi({ example: "Daphnia magna" }),
+  nature: z.string().min(3).max(100).openapi({ example: "cattapa leaves" }),
+  chemical: z.string().min(3).max(100).openapi({ example: "methylene blue" }),
+  imageSmall: z.url().openapi({ example: "" }),
+  images: z.array(z.string()),
   customerReview: z.array(
     z.object({
       customerName: z.string().openapi({ example: "Agus" }),
