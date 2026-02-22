@@ -1,3 +1,3 @@
-# Betta wava API
+# Betta Wava API
 
-API for [Betta wava](bettawava.burhanudin.com )
+REST API for [Betta Wava](https://betta-wava-api.burhanudin.com)

@@ -13,72 +13,65 @@ datasource db {
   provider = "postgresql"
 }
 
-model Bettas {
+model Product {
   id Int @id @default(autoincrement())
 
-  name               String
-  slug               String @unique
-  price              Int
-  stockLevel         Int
-  sku                String
-  gender             String
-  temperatureCelcius Int
-  phMin              Int
-  phMax              Int
-  widthCm            Int
-  HeightCm           Int
-  daily              String
-  feed               String
-  foodType           String
-  nature             String
-  chemical           String
-  imageSmall         String
+  name       String
+  slug       String @unique
+  price      Int
+  stockLevel Int
+  sku        String
 
-  variant   Variant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
-  variantId Int
-
-  color   Color? @relation(fields: [colorId], references: [id], onDelete: Cascade)
-  colorId Int
-
-  grade   Grade? @relation(fields: [gradeId], references: [id], onDelete: Cascade)
-  gradeId Int
+  images String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  // gender             String
+  // temperatureCelcius Int
+  // phMin              Int
+  // phMax              Int
+  // widthCm            Int
+  // HeightCm           Int
+  // daily              String
+  // feed               String
+  // foodType           String
+  // nature             String
+  // chemical           String
+
+  // variant   Variant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  // variantId Int
+
+  // color   Color? @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  // colorId Int
+
+  // grade   Grade? @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  // gradeId Int
 }
 
-model Variant {
-  id Int @id @default(autoincrement())
+// model Variant {
+//   id Int @id @default(autoincrement())
+//   name String
+//   slug String
+//   products Product[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
 
-  name String
-  slug String
+// model Color {
+//   id Int @id @default(autoincrement())
+//   name String
+//   slug String
+//   products Product[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
 
-  bettas Bettas[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
-
-model Color {
-  id Int @id @default(autoincrement())
-
-  name String
-  slug String
-
-  bettas Bettas[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
-
-model Grade {
-  id Int @id @default(autoincrement())
-
-  name String
-  slug String
-
-  bettas Bettas[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
+// model Grade {
+//   id Int @id @default(autoincrement())
+//   name String
+//   slug String
+//   products Product[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }

@@ -1,1 +1,0 @@
-import { Bettas } from "./schema";
