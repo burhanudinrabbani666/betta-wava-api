@@ -1,6 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { BettaSchema } from "./schema";
-import BettasData from "./bettas";
 
 export const bettasRoute = new OpenAPIHono();
 const tag = ["bettas"];
@@ -23,7 +22,7 @@ bettasRoute.openapi(
   },
   (c) => {
     try {
-      return c.json(BettasData);
+      return c.json([],200);
     } catch (error) {
       return c.json(error);
     }
