@@ -1,1 +1,3 @@
-open http://localhost:3000
+# Betta wava API
+
+API for [Betta wava](bettawava.burhanudin.com )
