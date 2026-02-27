@@ -1,6 +1,6 @@
 import { Product } from "./schema";
 
-const products: Product[] = [
+export const products: Product[] = [
   {
     name: "Multicolor Modern Plakat",
     price: 200000,
@@ -14,7 +14,7 @@ const products: Product[] = [
   },
 
   {
-    name: "Multicolor Yellow base Plakat",
+    name: "Multicolor Yellow base Plakat 1",
     price: 150000,
     stockLevel: 10,
     sku: "BW-MCP-2",
@@ -26,7 +26,7 @@ const products: Product[] = [
   },
 
   {
-    name: "Multicolor Candy Plakat",
+    name: "Multicolor Candy Plakat 1",
     price: 200000,
     stockLevel: 15,
     sku: "BW-MCP-3",
@@ -38,7 +38,7 @@ const products: Product[] = [
   },
 
   {
-    name: "Multicolor Candy Plakat",
+    name: "Multicolor Candy Plakat 2",
     price: 300000,
     stockLevel: 3,
     sku: "BW-MCP-4",
@@ -50,7 +50,7 @@ const products: Product[] = [
   },
 
   {
-    name: "Multicolor Yellow base Plakat",
+    name: "Multicolor Yellow base Plakat 2",
     price: 200000,
     stockLevel: 5,
     sku: "BW-MCP-5",
@@ -61,7 +61,7 @@ const products: Product[] = [
     ],
   },
   {
-    name: "Multicolor Halfmoon",
+    name: "Multicolor Halfmoon 1",
     price: 500000,
     stockLevel: 2,
     sku: "BW-MCH-1",
@@ -83,10 +83,10 @@ const products: Product[] = [
     ],
   },
   {
-    name: "Multicolor Halfmoon",
+    name: "Multicolor Halfmoon 2",
     price: 200000,
     stockLevel: 10,
-    sku: "BW-MCH-2",
+    sku: "BW-MCH-3",
     thumbnail:
       "https://3ufa9hkbld.ucarecd.net/c7b4b395-d78d-41af-85bc-1df51f01b966/-/scale_crop/300x300/",
     images: [

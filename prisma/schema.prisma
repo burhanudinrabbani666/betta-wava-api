@@ -20,7 +20,7 @@ model Product {
   slug       String   @unique
   price      Int
   stockLevel Int
-  sku        String
+  sku        String   @unique
   thumbnail  String
   images     String[]
 
