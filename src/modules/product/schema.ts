@@ -29,5 +29,9 @@ export const GetProductBySlug = z.object({
     .openapi({ example: "Multicolor-Modern-Plakat" }),
 });
 
+export const SearchQueryParams = z.object({
+  q: z.string().min(1).max(100).openapi({ example: "Modern" }),
+});
+
 export type Product = z.infer<typeof ProductSchema>;
 export type Products = z.infer<typeof ProductSchema>;
