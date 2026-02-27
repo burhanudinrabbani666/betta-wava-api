@@ -15,5 +15,19 @@ export const ProductSchema = z.object({
 
 export const ProductsSchema = z.array(ProductSchema);
 
+export const ProductSchemaEndPoint = ProductSchema.pick({
+  name: true,
+  price: true,
+  thumbnail: true,
+});
+
+export const GetProductBySlug = z.object({
+  slug: z
+    .string()
+    .min(1)
+    .max(100)
+    .openapi({ example: "Multicolor-Modern-Plakat" }),
+});
+
 export type Product = z.infer<typeof ProductSchema>;
 export type Products = z.infer<typeof ProductSchema>;
