@@ -29,8 +29,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Bettas
- * const bettas = await prisma.bettas.findMany()
+ * // Fetch zero or more Products
+ * const products = await prisma.product.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -40,22 +40,7 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model Bettas
+ * Model Product
  * 
  */
-export type Bettas = Prisma.BettasModel
-/**
- * Model Variant
- * 
- */
-export type Variant = Prisma.VariantModel
-/**
- * Model Color
- * 
- */
-export type Color = Prisma.ColorModel
-/**
- * Model Grade
- * 
- */
-export type Grade = Prisma.GradeModel
+export type Product = Prisma.ProductModel

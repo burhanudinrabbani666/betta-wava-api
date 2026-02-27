@@ -8,8 +8,5 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Bettas'
-export type * from './models/Variant'
-export type * from './models/Color'
-export type * from './models/Grade'
+export type * from './models/Product'
 export type * from './commonInputTypes'

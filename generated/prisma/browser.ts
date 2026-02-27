@@ -18,22 +18,7 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Bettas
+ * Model Product
  * 
  */
-export type Bettas = Prisma.BettasModel
-/**
- * Model Variant
- * 
- */
-export type Variant = Prisma.VariantModel
-/**
- * Model Color
- * 
- */
-export type Color = Prisma.ColorModel
-/**
- * Model Grade
- * 
- */
-export type Grade = Prisma.GradeModel
+export type Product = Prisma.ProductModel

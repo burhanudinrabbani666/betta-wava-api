@@ -51,10 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Bettas: 'Bettas',
-  Variant: 'Variant',
-  Color: 'Color',
-  Grade: 'Grade'
+  Product: 'Product'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,66 +70,20 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const BettasScalarFieldEnum = {
+export const ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
   price: 'price',
   stockLevel: 'stockLevel',
   sku: 'sku',
-  gender: 'gender',
-  temperatureCelcius: 'temperatureCelcius',
-  phMin: 'phMin',
-  phMax: 'phMax',
-  widthCm: 'widthCm',
-  HeightCm: 'HeightCm',
-  daily: 'daily',
-  feed: 'feed',
-  foodType: 'foodType',
-  nature: 'nature',
-  chemical: 'chemical',
-  imageSmall: 'imageSmall',
-  variantId: 'variantId',
-  colorId: 'colorId',
-  gradeId: 'gradeId',
+  thumbnail: 'thumbnail',
+  images: 'images',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type BettasScalarFieldEnum = (typeof BettasScalarFieldEnum)[keyof typeof BettasScalarFieldEnum]
-
-
-export const VariantScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type VariantScalarFieldEnum = (typeof VariantScalarFieldEnum)[keyof typeof VariantScalarFieldEnum]
-
-
-export const ColorScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
-
-
-export const GradeScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type GradeScalarFieldEnum = (typeof GradeScalarFieldEnum)[keyof typeof GradeScalarFieldEnum]
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
 export const SortOrder = {
