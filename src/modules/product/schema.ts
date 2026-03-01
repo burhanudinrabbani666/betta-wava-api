@@ -1,6 +1,9 @@
 import z from "zod";
 
 export const ProductSchema = z.object({
+  id: z.string(),
+
+  slug: z.string().min(3),
   name: z.string().min(3).max(100).openapi({ example: "Betta Multicolor" }),
   price: z.number().positive().openapi({ example: 100000 }),
   stockLevel: z.number().int().nonnegative().openapi({ example: 10 }),
@@ -15,18 +18,19 @@ export const ProductSchema = z.object({
 
 export const ProductsSchema = z.array(ProductSchema);
 
-export const ProductSchemaEndPoint = ProductSchema.pick({
-  name: true,
-  price: true,
-  thumbnail: true,
+export const SeedProductSchema = ProductSchema.omit({
+  id: true,
+  slug: true,
 });
+
+export const SeedProductsSchema = SeedProductSchema.array();
 
 export const GetProductBySlug = z.object({
   slug: z
     .string()
     .min(1)
     .max(100)
-    .openapi({ example: "Multicolor-Modern-Plakat" }),
+    .openapi({ example: "multicolor-modern-plakat" }),
 });
 
 export const SearchQueryParams = z.object({
@@ -34,4 +38,7 @@ export const SearchQueryParams = z.object({
 });
 
 export type Product = z.infer<typeof ProductSchema>;
-export type Products = z.infer<typeof ProductSchema>;
+export type Products = z.infer<typeof ProductsSchema>;
+
+export type SeedProduct = z.infer<typeof SeedProductSchema>;
+export type SeedProducts = z.infer<typeof SeedProductsSchema>;

@@ -1,6 +1,6 @@
-import { Product } from "./schema";
+import { SeedProducts } from "./schema";
 
-export const products: Product[] = [
+export const products: SeedProducts = [
   {
     name: "Multicolor Modern Plakat",
     price: 200000,

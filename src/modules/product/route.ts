@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OpenAPIHono } from "@hono/zod-openapi";
 import {
   GetProductBySlug,
   ProductSchema,
-  ProductSchemaEndPoint,
+  ProductsSchema,
   SearchQueryParams,
 } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export const productRoute = new OpenAPIHono();
+
 const tag = ["products"];
 
 productRoute.openapi(
@@ -20,7 +20,7 @@ productRoute.openapi(
     responses: {
       200: {
         description: "Successfully get products",
-        content: { "application/json": { schema: ProductSchemaEndPoint } },
+        content: { "application/json": { schema: ProductsSchema } },
       },
       500: {
         description: "Failed to get products",
@@ -29,17 +29,11 @@ productRoute.openapi(
   },
   async (c) => {
     try {
-      const products = await prisma.product.findMany({
-        select: {
-          name: true,
-          price: true,
-          thumbnail: true,
-        },
-      });
+      const products = await prisma.product.findMany();
 
       return c.json(products, 200);
-    } catch (error: unknown) {
-      return c.json({ message: "Failed to get all product's" }, 500);
+    } catch (error) {
+      return c.json({ message: "Failed to get all products", error }, 500);
     }
   },
 );
@@ -63,7 +57,7 @@ productRoute.openapi(
         description: "Failed to get products",
       },
       400: {
-        description: "Product not found!",
+        description: "Product not found",
       },
     },
   },
@@ -80,11 +74,11 @@ productRoute.openapi(
         },
       });
 
-      if (!foundProduct) return c.json({ message: "Product not found!" }, 404);
+      if (!foundProduct) return c.json({ message: "Product not found" }, 404);
 
       return c.json(foundProduct, 200);
     } catch (error) {
-      return c.json({ message: "Failes to get Product!" }, 500);
+      return c.json({ message: "Failed to get product", error }, 500);
     }
   },
 );
@@ -105,10 +99,10 @@ productRoute.openapi(
         content: { "application/json": { schema: ProductSchema } },
       },
       500: {
-        description: "Failed to get products",
+        description: "Failed to get one product",
       },
-      400: {
-        description: "Product not found!",
+      404: {
+        description: "Product not found",
       },
     },
   },
@@ -122,13 +116,11 @@ productRoute.openapi(
         },
       });
 
-      if (!product) return c.json({ message: "Product not found!", slug }, 404);
+      if (!product) return c.json({ message: "Product not found", slug }, 404);
 
       return c.json(product, 200);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      return c.json({ message: "Failed to get product" }, 500);
+    } catch (error) {
+      return c.json({ message: "Failed to get product", error }, 500);
     }
   },
 );

@@ -4,30 +4,23 @@ import slugify from "slugify";
 
 async function main() {
   for (const product of products) {
-    const upsertProduct = await prisma.product.upsert({
+    const slug = slugify(product.name, { lower: true }); // TODO: extract as function
+
+    const upsertedProduct = await prisma.product.upsert({
       where: {
-        slug: slugify(product.name),
+        slug,
       },
       update: {
-        name: product.name,
-        price: product.price,
-        stockLevel: product.stockLevel,
-        sku: product.sku,
-        thumbnail: product.thumbnail,
-        images: product.images,
+        ...product,
+        slug,
       },
       create: {
-        name: product.name,
-        slug: slugify(product.name),
-        price: product.price,
-        stockLevel: product.stockLevel,
-        sku: product.sku,
-        thumbnail: product.thumbnail,
-        images: product.images,
+        ...product,
+        slug,
       },
     });
 
-    console.log(`${upsertProduct.name} successfully upsert 🥳`);
+    console.log(`🐠 ${upsertedProduct.name}`);
   }
 }
 
