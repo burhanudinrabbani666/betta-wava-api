@@ -4,30 +4,53 @@ import slugify from "slugify";
 
 async function main() {
   for (const product of products) {
+    const slug = slugify(product.variant, { lower: true });
+
+    const upsertedProductVariant = await prisma.variant.upsert({
+      where: { slug },
+      update: { name: product.variant, slug },
+      create: { name: product.variant, slug },
+    });
+
+    console.log(`🐟 ${upsertedProductVariant.name}`);
+  }
+
+  for (const product of products) {
+    const slug = slugify(product.name, { lower: true });
+    const variantSlug = slugify(product.variant, { lower: true });
+
     const upsertProduct = await prisma.product.upsert({
-      where: {
-        slug: slugify(product.name),
-      },
+      where: { slug },
       update: {
         name: product.name,
         price: product.price,
         stockLevel: product.stockLevel,
         sku: product.sku,
-        thumbnailUrl: product.thumbnailU,
-        images: product.images,
+        thumbnailUrl: product.thumbnailUrl,
+        imagesUrls: product.imageUrls,
+        variant: {
+          connect: {
+            slug: variantSlug,
+          },
+        },
       },
       create: {
         name: product.name,
-        slug: slugify(product.name),
+        slug,
         price: product.price,
         stockLevel: product.stockLevel,
         sku: product.sku,
-        thumbnail: product.thumbnail,
-        images: product.images,
+        thumbnailUrl: product.thumbnailUrl,
+        imagesUrls: product.imageUrls,
+        variant: {
+          connect: {
+            slug: variantSlug,
+          },
+        },
       },
     });
 
-    console.log(`${upsertProduct.name} successfully upsert 🥳`);
+    console.log(`🐟 ${upsertProduct.name}`);
   }
 }
 

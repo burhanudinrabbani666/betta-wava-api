@@ -40,5 +40,5 @@ model Variant {
   Products Product[]
 
   createdAt DateTime @default(now())
-  updatedAT DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
