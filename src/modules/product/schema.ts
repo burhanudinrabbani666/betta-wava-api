@@ -7,6 +7,7 @@ export const ProductSchema = z.object({
   price: z.number().positive().openapi({ example: 100000 }),
   stockLevel: z.number().int().nonnegative().openapi({ example: 10 }),
   sku: z.string().min(3).max(100).openapi({ example: "BW-MC-1" }),
+  variant: z.enum(["Competition", "Grade A", "Breeding", "Standard"]),
   thumbnailUrl: z.url().openapi({
     example:
       "https://3ufa9hkbld.ucarecd.net/926645e1-07ae-4599-839c-78a8159492da/-/scale_crop/300x300/",
