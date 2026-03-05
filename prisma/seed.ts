@@ -13,7 +13,7 @@ async function main() {
         price: product.price,
         stockLevel: product.stockLevel,
         sku: product.sku,
-        thumbnail: product.thumbnail,
+        thumbnailUrl: product.thumbnailU,
         images: product.images,
       },
       create: {
