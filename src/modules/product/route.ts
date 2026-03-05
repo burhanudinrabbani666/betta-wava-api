@@ -1,11 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OpenAPIHono } from "@hono/zod-openapi";
-import {
-  GetProductBySlug,
-  ProductSchema,
-  ProductSchemaEndPoint,
-  SearchQueryParams,
-} from "./schema";
+import { GetProductBySlug, ProductSchema, SearchQueryParams } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export const productRoute = new OpenAPIHono();
@@ -20,7 +14,7 @@ productRoute.openapi(
     responses: {
       200: {
         description: "Successfully get products",
-        content: { "application/json": { schema: ProductSchemaEndPoint } },
+        content: { "application/json": { schema: ProductSchema } },
       },
       500: {
         description: "Failed to get products",
@@ -30,16 +24,14 @@ productRoute.openapi(
   async (c) => {
     try {
       const products = await prisma.product.findMany({
-        select: {
-          name: true,
-          price: true,
-          thumbnail: true,
+        include: {
+          variant: true,
         },
       });
 
       return c.json(products, 200);
-    } catch (error: unknown) {
-      return c.json({ message: "Failed to get all product's" }, 500);
+    } catch (error) {
+      return c.json({ message: "Failed to get all products", error }, 500);
     }
   },
 );
@@ -84,7 +76,7 @@ productRoute.openapi(
 
       return c.json(foundProduct, 200);
     } catch (error) {
-      return c.json({ message: "Failes to get Product!" }, 500);
+      return c.json({ message: "Failes to get Product!", error }, 500);
     }
   },
 );
@@ -125,10 +117,8 @@ productRoute.openapi(
       if (!product) return c.json({ message: "Product not found!", slug }, 404);
 
       return c.json(product, 200);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      return c.json({ message: "Failed to get product" }, 500);
+    } catch (error) {
+      return c.json({ message: "Failed to get product", error }, 500);
     }
   },
 );
