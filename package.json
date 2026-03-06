@@ -2,7 +2,7 @@
   "name": "betta-wava-api",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "start": "bun run src/index.ts",
+    "start": "bun src/index.ts",
     "build": "bun install && bun db:gen",
     "db:up": "docker compose up -d",
     "db:migrate": "prisma migrate dev",
