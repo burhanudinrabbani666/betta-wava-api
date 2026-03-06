@@ -113,6 +113,9 @@ productRoute.openapi(
         where: {
           slug,
         },
+        include: {
+          variant: true,
+        },
       });
 
       if (!product) return c.json({ message: "Product not found!", slug }, 404);
