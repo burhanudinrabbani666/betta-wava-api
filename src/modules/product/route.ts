@@ -5,6 +5,7 @@ import { prisma } from "../../lib/prisma";
 export const productRoute = new OpenAPIHono();
 const tag = ["products"];
 
+// Get All Product
 productRoute.openapi(
   {
     method: "get",
