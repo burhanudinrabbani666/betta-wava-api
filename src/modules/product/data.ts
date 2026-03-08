@@ -21,7 +21,7 @@ export const products: SeedProductSchema[] = [
     sku: "BW-MCP-2",
     variant: "grade a",
     thumbnailUrl:
-      "https://3ufa9hkbld.ucarecd.net/37c059d5-3806-4926-996e-2aa38153f044/-/scale_crop/300x300/",
+      "https://3ufa9hkbld.ucarecd.net/3bd83355-fabe-4442-9978-a74355b1e83e/-/scale_crop/300x300/",
     imageUrls: [
       "https://3ufa9hkbld.ucarecd.net/3bd83355-fabe-4442-9978-a74355b1e83e/multicolorplakat4.jpg",
       "https://3ufa9hkbld.ucarecd.net/17dc0b2b-4057-44cd-89d2-c1d9c276be0f/multicolorplakat2.jpg",
