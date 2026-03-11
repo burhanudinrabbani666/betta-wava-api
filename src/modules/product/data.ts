@@ -1,6 +1,6 @@
-import { SeedProductSchema } from "./schema";
+import { SeedProducts } from "./schema";
 
-export const products: SeedProductSchema[] = [
+export const products: SeedProducts = [
   {
     name: "multicolor betta plakat (competition grade)",
     price: 200000,

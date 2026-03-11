@@ -27,7 +27,7 @@ model Product {
   stockLevel   Int
   sku          String   @unique
   thumbnailUrl String
-  imagesUrls   String[]
+  imageUrls   String[]
 
   variant   Variant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
   variantId String   @default(ulid())
@@ -39,7 +39,7 @@ model Product {
 model Variant {
   id String @id @default(ulid())
 
-  name String
+  name String 
   slug String @unique
 
   Products Product[]

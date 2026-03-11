@@ -4,7 +4,10 @@ import slugify from "slugify";
 
 async function main() {
   for (const product of products) {
-    const slug = slugify(product.variant, { lower: true });
+    const slug = slugify(product.variant, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
 
     const upsertedProductVariant = await prisma.variant.upsert({
       where: { slug },
@@ -27,7 +30,7 @@ async function main() {
         stockLevel: product.stockLevel,
         sku: product.sku,
         thumbnailUrl: product.thumbnailUrl,
-        imagesUrls: product.imageUrls,
+        imageUrls: product.imageUrls,
         variant: {
           connect: {
             slug: variantSlug,
@@ -41,7 +44,7 @@ async function main() {
         stockLevel: product.stockLevel,
         sku: product.sku,
         thumbnailUrl: product.thumbnailUrl,
-        imagesUrls: product.imageUrls,
+        imageUrls: product.imageUrls,
         variant: {
           connect: {
             slug: variantSlug,
