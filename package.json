@@ -16,11 +16,12 @@
     "@hono/zod-openapi": "^1.2.1",
     "@hono/zod-validator": "^0.7.6",
     "@prisma/adapter-pg": "^7.4.0",
-    "@prisma/client": "^7.4.0",
+    "@prisma/client": "^7.4.2",
     "@scalar/hono-api-reference": "^0.9.40",
     "dotenv": "^17.3.1",
     "hono": "^4.11.9",
     "pg": "^8.18.0",
+    "prisma-zod-generator": "^2.1.4",
     "slugify": "^1.6.6",
     "zod": "^4.3.6"
   },
