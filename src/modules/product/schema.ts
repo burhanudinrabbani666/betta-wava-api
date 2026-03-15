@@ -14,6 +14,15 @@ export const SeedProductSchema = ProductSchema.omit({
 
 export const SeedProductsSchema = SeedProductSchema.array();
 
+export const GetProductBySlugSchema = ProductSchema.pick({ slug: true });
+
+export const ProductQuerySchema = z.object({
+  color: z.string().optional().openapi({ example: "bluerim" }),
+  variant: z.string().optional().openapi({ example: "grade-a" }),
+  minPrice: z.string().optional().openapi({ example: 100000 }),
+  maxPrice: z.string().optional().openapi({ example: 1000000 }),
+});
+
 //-------------------------------------//
 //          Export type               //
 //-------------------------------------//
