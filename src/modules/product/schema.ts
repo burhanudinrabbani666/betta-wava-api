@@ -1,7 +1,12 @@
 import z from "zod";
-import { ProductModelSchema } from "../../generated/zod/schemas";
+import {
+  ProductModelSchema,
+  VariantModelSchema,
+} from "../../generated/zod/schemas";
 
-export const ProductSchema = ProductModelSchema;
+export const ProductSchema = ProductModelSchema.extend({
+  variant: VariantModelSchema,
+});
 export const ProductsSchema = ProductSchema.array();
 
 export const SeedProductSchema = ProductSchema.omit({
@@ -15,6 +20,9 @@ export const SeedProductSchema = ProductSchema.omit({
 export const SeedProductsSchema = SeedProductSchema.array();
 
 export const GetProductBySlugSchema = ProductSchema.pick({ slug: true });
+
+// prettier-ignore
+export const GetProducstByVariantSchema = VariantModelSchema.pick({slug: true});
 
 export const ProductQuerySchema = z.object({
   color: z.string().optional().openapi({ example: "bluerim" }),

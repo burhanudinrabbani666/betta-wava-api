@@ -3,6 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { productRoute } from "./modules/product/route";
 import { cors } from "hono/cors";
+import { variantRoute } from "./modules/variant/route";
 
 const app = new OpenAPIHono();
 
@@ -10,6 +11,7 @@ app.use(cors());
 app.use(logger());
 
 app.route("/products", productRoute);
+app.route("/variant", variantRoute);
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
