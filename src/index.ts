@@ -4,6 +4,7 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { productRoute } from "./modules/product/route";
 import { cors } from "hono/cors";
 import { variantRoute } from "./modules/variant/route";
+import { userRoute } from "./modules/users/route";
 
 const app = new OpenAPIHono();
 
@@ -12,6 +13,7 @@ app.use(logger());
 
 app.route("/products", productRoute);
 app.route("/variant", variantRoute);
+app.route("/user", userRoute);
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
