@@ -29,9 +29,7 @@ async function main() {
         thumbnailUrl: product.thumbnailUrl,
         imageUrls: product.imageUrls,
         variant: {
-          connect: {
-            slug: variantSlug,
-          },
+          connect: { slug: variantSlug },
         },
       },
       create: {
@@ -43,9 +41,7 @@ async function main() {
         thumbnailUrl: product.thumbnailUrl,
         imageUrls: product.imageUrls,
         variant: {
-          connect: {
-            slug: variantSlug,
-          },
+          connect: { slug: variantSlug },
         },
       },
     });

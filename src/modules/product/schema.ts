@@ -15,14 +15,18 @@ export const SeedProductSchema = ProductSchema.omit({
   createdAt: true,
   updatedAt: true,
   variantId: true,
+  variant: true,
+}).extend({
+  variant: z.string(),
 });
 
 export const SeedProductsSchema = SeedProductSchema.array();
 
 export const GetProductBySlugSchema = ProductSchema.pick({ slug: true });
 
-// prettier-ignore
-export const GetProducstByVariantSchema = VariantModelSchema.pick({slug: true});
+export const GetProducstByVariantSchema = VariantModelSchema.pick({
+  slug: true,
+});
 
 export const ProductQuerySchema = z.object({
   color: z.string().optional().openapi({ example: "bluerim" }),
