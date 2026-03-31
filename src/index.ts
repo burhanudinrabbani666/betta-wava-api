@@ -13,7 +13,7 @@ app.use(logger());
 
 app.route("/products", productRoute);
 app.route("/variant", variantRoute);
-app.route("/user", userRoute);
+app.route("/users", userRoute);
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
