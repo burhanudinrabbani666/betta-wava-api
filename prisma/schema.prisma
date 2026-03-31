@@ -52,27 +52,28 @@ model Variant {
 //                                 User Model                              // 
 // ----------------------------------------------------------------------- // 
 
-// model User {
-//   id String @id @default(ulid())
+model User {
+  id String @id @default(ulid())
 
-//   username String @unique
-//   email    String @unique
-//   fullName String
+  username  String @unique
+  firstName String
+  lastName  String
+  email     String @unique
 
-//   password Password?
+  password Password?
 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
-// model Password {
-//   id String @id @default(ulid())
+model Password {
+  id String @id @default(ulid())
 
-//   hash String
+  hash String
 
-//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   userId String @unique
+  user   User?  @relation(fields: [userId], references: [id])
+  userId String @unique
 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
