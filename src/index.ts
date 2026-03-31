@@ -5,6 +5,7 @@ import { productRoute } from "./modules/product/route";
 import { cors } from "hono/cors";
 import { variantRoute } from "./modules/variant/route";
 import { userRoute } from "./modules/users/route";
+import { authRoute } from "./modules/auth/route";
 
 const app = new OpenAPIHono();
 
@@ -14,6 +15,7 @@ app.use(logger());
 app.route("/products", productRoute);
 app.route("/variant", variantRoute);
 app.route("/users", userRoute);
+app.route("/auth", authRoute);
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
