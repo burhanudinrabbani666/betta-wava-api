@@ -1,5 +1,9 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { RegisterUserSchema } from "./schema";
+import {
+  LoginResponseSchema,
+  LoginUserSchema,
+  RegisterUserSchema,
+} from "./schema";
 import { UserSchema } from "../users/schema";
 import { prisma } from "../../lib/prisma";
 import { hashPassword } from "../../lib/hash";
@@ -8,7 +12,7 @@ import type { PrismaError } from "../../lib/errorSchema";
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
 
-// Get All Product
+// Register
 authRoute.openapi(
   {
     method: "post",
@@ -54,13 +58,61 @@ authRoute.openapi(
         );
       }
 
+      return c.json({ message: "Failed to register new User" }, 400);
+    }
+  },
+);
+
+// Login
+authRoute.openapi(
+  {
+    method: "post",
+    path: "/login",
+    tags: tag,
+    request: {
+      body: { content: { "application/json": { schema: LoginUserSchema } } },
+    },
+    responses: {
+      200: {
+        description: "Login User",
+        content: { "application/json": { schema: LoginResponseSchema } },
+      },
+      400: { description: "Failed to Login user" },
+    },
+  },
+  async (c) => {
+    try {
+      const validatedBody = c.req.valid("json");
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email: validatedBody.email },
+        include: {
+          password: { select: { hash: true } },
+        },
+      });
+
+      console.log(existingUser);
+
       return c.json(
         {
-          message: "Failed to register new User",
-          error,
+          token: "",
+          user: existingUser,
         },
-        400,
+        200,
       );
+    } catch (error) {
+      const prismaError = error as PrismaError;
+
+      if (prismaError.code === "P2002") {
+        return c.json(
+          {
+            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} Is already Used`,
+          },
+          401,
+        );
+      }
+
+      return c.json({ message: "Failed to register new User" }, 400);
     }
   },
 );
