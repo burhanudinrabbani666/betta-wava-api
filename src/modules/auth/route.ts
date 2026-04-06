@@ -6,7 +6,7 @@ import {
 } from "./schema";
 import { UserSchema } from "../users/schema";
 import { prisma } from "../../lib/prisma";
-import { hashPassword } from "../../lib/hash";
+import { hashPassword, verifyPassword } from "../../lib/hash";
 import type { PrismaError } from "../../lib/errorSchema";
 
 export const authRoute = new OpenAPIHono();
@@ -90,6 +90,22 @@ authRoute.openapi(
           password: { select: { hash: true } },
         },
       });
+
+      if (!existingUser?.password?.hash) {
+        return c.json(
+          { message: "Failed to Login. User has no Password" },
+          400,
+        );
+      }
+
+      const isPasswordVerify = await verifyPassword(
+        existingUser?.password?.hash,
+        validatedBody.password,
+      );
+
+      if (!isPasswordVerify) {
+        return c.json({ message: "Failed to Login. Password is wrong!" }, 400);
+      }
 
       console.log(existingUser);
 
