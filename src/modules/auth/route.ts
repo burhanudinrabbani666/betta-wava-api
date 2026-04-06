@@ -8,6 +8,7 @@ import { UserSchema } from "../users/schema";
 import { prisma } from "../../lib/prisma";
 import { hashPassword, verifyPassword } from "../../lib/hash";
 import type { PrismaError } from "../../lib/errorSchema";
+import { signToken } from "../../lib/token";
 
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
@@ -107,28 +108,24 @@ authRoute.openapi(
         return c.json({ message: "Failed to Login. Password is wrong!" }, 400);
       }
 
-      console.log(existingUser);
+      const token = signToken({ id: existingUser.id });
 
-      return c.json(
-        {
-          token: "",
-          user: existingUser,
+      const loginResponse = {
+        token,
+        user: {
+          id: existingUser.id,
+          username: existingUser.username,
+          firstName: existingUser.firstName,
+          lastName: existingUser.lastName,
+          email: existingUser.email,
         },
-        200,
-      );
+      };
+
+      return c.json(loginResponse, 200);
     } catch (error) {
-      const prismaError = error as PrismaError;
+      console.log(error);
 
-      if (prismaError.code === "P2002") {
-        return c.json(
-          {
-            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} Is already Used`,
-          },
-          401,
-        );
-      }
-
-      return c.json({ message: "Failed to register new User" }, 400);
+      return c.json({ message: "Failed to Login User" }, 400);
     }
   },
 );

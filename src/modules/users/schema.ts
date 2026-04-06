@@ -21,6 +21,8 @@ export const SeedUserSchema = UserSchema.omit({
 
 export const SeedUsersSchema = SeedUserSchema.array();
 
+export const TokenUserSchema = UserSchema.pick({ id: true });
+
 //-------------------------------------//
 //          Export type               //
 //-------------------------------------//
@@ -33,3 +35,5 @@ export type PublicUsers = z.infer<typeof PublicUserSchema>;
 
 export type SeedUser = z.infer<typeof SeedUserSchema>;
 export type SeedUsers = z.infer<typeof SeedUsersSchema>;
+
+export type TokenUser = z.infer<typeof TokenUserSchema>;
