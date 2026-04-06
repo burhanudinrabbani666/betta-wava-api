@@ -1,7 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { RegisterUserSchema } from "./schema";
-// import { prisma } from "../../lib/prisma";
 import { UserSchema } from "../users/schema";
+import { prisma } from "../../lib/prisma";
+import { password } from "bun";
 
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
@@ -20,16 +21,22 @@ authRoute.openapi(
         description: "Register new User",
         content: { "application/json": { schema: UserSchema } },
       },
-      400: { description: "Failed to Register" },
+      400: { description: "Failed to Register new User" },
     },
   },
   async (c) => {
     try {
       const validatedBody = c.req.valid("json");
-      // const users = await prisma.user.findFirst();
 
-      // if (!users)
-      //   throw new Error("Failed to register user", { cause: { code: 400 } });
+      const newUser = await prisma.user.create({
+        data: {
+          username: validatedBody.username,
+          firstName: validatedBody.firstName,
+          lastName: validatedBody.lastName,
+          email: validatedBody.email,
+          password: { create: { hash: validatedBody.password } },
+        },
+      });
 
       return c.json({ validatedBody }, 200);
     } catch (error) {

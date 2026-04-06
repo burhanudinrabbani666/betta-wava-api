@@ -7,6 +7,7 @@ export const UserSchema = UserModelSchema.omit({ password: true }).extend({
   lastName: z.string().openapi({ example: "example" }),
   email: z.string().openapi({ example: "example@example.io" }),
 });
+
 export const UsersSchema = UserSchema.array();
 
 // export const SeedUserSchema = UserSchema.omit({
