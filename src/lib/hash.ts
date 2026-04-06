@@ -1,6 +1,6 @@
 import * as argon2 from "argon2";
 
-export async function hashPassword(plainTextPassword: type) {
+export async function hashPassword(plainTextPassword: string) {
   try {
     const hash = await argon2.hash(plainTextPassword);
 

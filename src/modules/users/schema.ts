@@ -8,33 +8,18 @@ export const UserSchema = UserModelSchema.omit({ password: true }).extend({
   email: z.string().openapi({ example: "example@example.io" }),
 });
 
+export const PublicUserSchema = UserSchema.omit({ email: true });
+
 export const UsersSchema = UserSchema.array();
+export const PublicUsersSchema = PublicUserSchema.array();
 
-// export const SeedUserSchema = UserSchema.omit({
-//   id: true,
-//   slug: true,
-//   createdAt: true,
-//   updatedAt: true,
-//   variantId: true,
-//   variant: true,
-// }).extend({
-//   variant: z.string(),
-// });
+export const SeedUserSchema = UserSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
-// export const SeedUsersSchema = SeedUserSchema.array();
-
-// export const GetUserBySlugSchema = UserSchema.pick({ slug: true });
-
-// export const GetProducstByVariantSchema = VariantModelSchema.pick({
-//   slug: true,
-// });
-
-// export const UserQuerySchema = z.object({
-//   color: z.string().optional().openapi({ example: "bluerim" }),
-//   variant: z.string().optional().openapi({ example: "grade-a" }),
-//   minPrice: z.string().optional().openapi({ example: 100000 }),
-//   maxPrice: z.string().optional().openapi({ example: 1000000 }),
-// });
+export const SeedUsersSchema = SeedUserSchema.array();
 
 //-------------------------------------//
 //          Export type               //
@@ -43,5 +28,8 @@ export const UsersSchema = UserSchema.array();
 export type User = z.infer<typeof UserSchema>;
 export type Users = z.infer<typeof UsersSchema>;
 
-// export type SeedUser = z.infer<typeof SeedUserSchema>;
-// export type SeedUsers = z.infer<typeof SeedUsersSchema>;
+export type PublicUser = z.infer<typeof PublicUserSchema>;
+export type PublicUsers = z.infer<typeof PublicUserSchema>;
+
+export type SeedUser = z.infer<typeof SeedUserSchema>;
+export type SeedUsers = z.infer<typeof SeedUsersSchema>;

@@ -1,5 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { UsersSchema } from "./schema";
+import { PublicUsersSchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export const userRoute = new OpenAPIHono();
@@ -14,14 +14,14 @@ userRoute.openapi(
     responses: {
       200: {
         description: "Get all Users",
-        content: { "application/json": { schema: UsersSchema } },
+        content: { "application/json": { schema: PublicUsersSchema } },
       },
       500: { description: "Failed to get Users" },
     },
   },
   async (c) => {
     try {
-      const users = await prisma.user.findMany();
+      const users = await prisma.user.findMany({ omit: { email: true } });
 
       return c.json(users, 200);
     } catch (error) {

@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { RegisterUserSchema } from "./schema";
 import { UserSchema } from "../users/schema";
 import { prisma } from "../../lib/prisma";
-import { password } from "bun";
+import { hashPassword } from "../../lib/hash";
 
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
@@ -34,11 +34,13 @@ authRoute.openapi(
           firstName: validatedBody.firstName,
           lastName: validatedBody.lastName,
           email: validatedBody.email,
-          password: { create: { hash: validatedBody.password } },
+          password: {
+            create: { hash: await hashPassword(validatedBody.password) },
+          },
         },
       });
 
-      return c.json({ validatedBody }, 200);
+      return c.json({ newUser }, 200);
     } catch (error) {
       return c.json(error);
     }
