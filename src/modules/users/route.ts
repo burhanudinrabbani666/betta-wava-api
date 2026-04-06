@@ -16,7 +16,7 @@ userRoute.openapi(
         description: "Get all Users",
         content: { "application/json": { schema: PublicUsersSchema } },
       },
-      500: { description: "Failed to get Users" },
+      401: { description: "Failed to get Users" },
     },
   },
   async (c) => {
@@ -25,7 +25,7 @@ userRoute.openapi(
 
       return c.json(users, 200);
     } catch (error) {
-      return c.json({ message: "Failed to get Users", error }, 500);
+      return c.json({ message: "Failed to get Users", error }, 401);
     }
   },
 );
