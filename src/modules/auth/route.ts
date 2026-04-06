@@ -44,10 +44,13 @@ authRoute.openapi(
     } catch (error) {
       console.log(error);
 
-      return c.json({
-        message: "Failed to register new User",
-        error,
-      });
+      return c.json(
+        {
+          message: "Failed to register new User",
+          error,
+        },
+        400,
+      );
     }
   },
 );
