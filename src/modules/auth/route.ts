@@ -7,9 +7,9 @@ import {
 import { UserSchema } from "../users/schema";
 import { prisma } from "../../lib/prisma";
 import { hashPassword, verifyPassword } from "../../lib/hash";
-import type { PrismaError } from "../../lib/errorSchema";
 import { signToken } from "../../lib/token";
 import { checkAuthMiddleware } from "./middleware";
+import { PrismaError } from "../common/error.type";
 
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
@@ -54,7 +54,7 @@ authRoute.openapi(
       if (prismaError.code === "P2002") {
         return c.json(
           {
-            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} Is already Used`,
+            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} is already used`,
           },
           401,
         );
