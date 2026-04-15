@@ -9,6 +9,7 @@ import { prisma } from "../../lib/prisma";
 import { hashPassword, verifyPassword } from "../../lib/hash";
 import type { PrismaError } from "../../lib/errorSchema";
 import { signToken } from "../../lib/token";
+import { checkAuthMiddleware } from "./middleware";
 
 export const authRoute = new OpenAPIHono();
 const tag = ["Auth"];
@@ -126,6 +127,46 @@ authRoute.openapi(
       console.log(error);
 
       return c.json({ message: "Failed to Login User" }, 400);
+    }
+  },
+);
+
+// Aunthentication
+authRoute.openapi(
+  {
+    method: "get",
+    path: "/me",
+    tags: tag,
+    middleware: checkAuthMiddleware,
+    request: {
+      body: { content: { "application/json": { schema: UserSchema } } },
+    },
+    responses: {
+      200: {
+        description: "Get Auntheticated User",
+        content: { "application/json": { schema: UserSchema } },
+      },
+      400: { description: "Failed to Get Auntheticated User" },
+    },
+  },
+  async (c) => {
+    try {
+      const user = c.get("user");
+
+      return c.json(user);
+    } catch (error) {
+      const prismaError = error as PrismaError;
+
+      if (prismaError.code === "P2002") {
+        return c.json(
+          {
+            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} Is already Used`,
+          },
+          401,
+        );
+      }
+
+      return c.json({ message: "Failed to register new User" }, 400);
     }
   },
 );

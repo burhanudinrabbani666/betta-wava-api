@@ -6,9 +6,7 @@ import { verifyToken } from "../../lib/token";
 import { prisma } from "../../lib/prisma";
 
 export const AuthMiddlewareEnvSchema = z.object({
-  Variables: z.object({
-    user: UserSchema,
-  }),
+  Variables: z.object({ user: UserSchema }),
 });
 
 type AuthMiddlewareEnv = z.infer<typeof AuthMiddlewareEnvSchema>;
@@ -34,32 +32,21 @@ export const checkAuthMiddleware = factory.createMiddleware(async (c, next) => {
     }
 
     const payload = verifyToken(token);
-    if (!payload) {
-      return c.json({ message: "Invalid token" }, 401);
-    }
 
-    if (!payload.sub || typeof payload.sub !== "string") {
+    if (!payload) return c.json({ message: "Invalid token" }, 401);
+
+    if (!payload.sub || typeof payload.sub !== "string")
       return c.json({ message: "Token user ID is invalid" }, 401);
-    }
 
-    const user = await prisma.user.findUnique({
-      where: { id: payload.sub },
-    });
-    if (!user) {
-      return c.json({ message: "User is no longer available" }, 401);
-    }
+    const user = await prisma.user.findUnique({ where: { id: payload.sub } });
+
+    if (!user) return c.json({ message: "User is no longer available" }, 401);
 
     c.set("user", user);
 
     await next();
   } catch (error) {
     console.error(error);
-    return c.json(
-      {
-        message: "Failed to check authorized user",
-        error,
-      },
-      401,
-    );
+    return c.json({ message: "Failed to check authorized user", error }, 401);
   }
 });
