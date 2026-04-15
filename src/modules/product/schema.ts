@@ -29,10 +29,9 @@ export const GetProducstByVariantSchema = VariantModelSchema.pick({
 });
 
 export const ProductQuerySchema = z.object({
-  color: z.string().optional().openapi({ example: "bluerim" }),
-  variant: z.string().optional().openapi({ example: "grade-a" }),
   minPrice: z.string().optional().openapi({ example: 100000 }),
   maxPrice: z.string().optional().openapi({ example: 1000000 }),
+  page: z.int().optional().openapi({ example: 1 }),
 });
 
 //-------------------------------------//

@@ -1,10 +1,12 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import {
   GetProductBySlugSchema,
+  ProductQuerySchema,
   ProductSchema,
   ProductsSchema,
 } from "./schema";
 import { prisma } from "../../lib/prisma";
+import { Prisma } from "../../generated/prisma/client";
 
 export const productRoute = new OpenAPIHono();
 const tag = ["products"];
@@ -16,6 +18,9 @@ productRoute.openapi(
     path: "/",
     description: "Get all products",
     tags: tag,
+    request: {
+      query: ProductQuerySchema,
+    },
     responses: {
       200: {
         description: "Successfully get products",
@@ -26,8 +31,26 @@ productRoute.openapi(
   },
   async (c) => {
     try {
+      const { minPrice, maxPrice, page } = c.req.valid("query");
+
+      const ITEMS_PER_PAGE = 10;
+      const currentPage = page ?? 1;
+      const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+
+      const where: Prisma.ProductWhereInput = {};
+
+      if (minPrice !== undefined || maxPrice !== undefined) {
+        where.price = {};
+
+        if (minPrice !== undefined) where.price.gte = Number(minPrice);
+        if (maxPrice !== undefined) where.price.lte = Number(maxPrice);
+      }
       const products = await prisma.product.findMany({
+        where,
         include: { variant: true },
+        skip,
+        take: ITEMS_PER_PAGE,
+        orderBy: { createdAt: "desc" },
       });
 
       return c.json(products, 200);
