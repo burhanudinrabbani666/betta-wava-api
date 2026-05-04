@@ -25,6 +25,7 @@ export const LoginResponseSchema = z.object({
     lastName: true,
   }),
 });
+
 //-------------------------------------//
 //           Export type               //
 //-------------------------------------//

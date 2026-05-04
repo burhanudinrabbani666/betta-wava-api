@@ -42,7 +42,7 @@ model Variant {
   name String
   slug String @unique
 
-  Products Product[]
+  products Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())

@@ -54,7 +54,7 @@ authRoute.openapi(
       if (prismaError.code === "P2002") {
         return c.json(
           {
-            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} Is already Used`,
+            message: `${prismaError.meta.driverAdapterError.cause.constraint.fields} is already Used`,
           },
           401,
         );

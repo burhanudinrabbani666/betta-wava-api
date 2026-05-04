@@ -13,7 +13,7 @@ app.use(cors());
 app.use(logger());
 
 app.route("/products", productRoute);
-app.route("/variant", variantRoute);
+app.route("/variants", variantRoute);
 app.route("/users", userRoute);
 app.route("/auth", authRoute);
 
