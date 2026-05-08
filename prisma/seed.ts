@@ -3,7 +3,7 @@ import { products } from "../src/modules/product/data";
 import slugify from "slugify";
 
 async function main() {
-  const variantArray: string[] = []
+  const variantArray: string[] = [];
   for (const product of products) {
     const slug = slugify(product.variant, { lower: true });
 
@@ -13,9 +13,9 @@ async function main() {
       create: { name: product.variant, slug },
     });
 
-    if(!variantArray.includes(upsertedProductVariant.name)){
-      variantArray.push(upsertedProductVariant.name)
-      console.log(upsertedProductVariant.name)
+    if (!variantArray.includes(upsertedProductVariant.name)) {
+      variantArray.push(upsertedProductVariant.name);
+      console.log(upsertedProductVariant.name);
     }
   }
 

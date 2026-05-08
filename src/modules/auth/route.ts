@@ -79,7 +79,7 @@ authRoute.openapi(
         description: "Login User",
         content: { "application/json": { schema: LoginResponseSchema } },
       },
-      400: { description: "Failed to Login user" },
+      401: { description: "Failed to Login." },
     },
   },
   async (c) => {
@@ -93,10 +93,14 @@ authRoute.openapi(
         },
       });
 
-      if (!existingUser?.password?.hash) {
+      if (!existingUser) {
+        return c.json({ message: "Failed to login. Invalid Credential" }, 401);
+      }
+
+      if (!existingUser.password?.hash) {
         return c.json(
           { message: "Failed to Login. User has no Password" },
-          400,
+          { status: 401 },
         );
       }
 
@@ -106,7 +110,7 @@ authRoute.openapi(
       );
 
       if (!isPasswordVerify) {
-        return c.json({ message: "Failed to Login. Password is wrong!" }, 400);
+        return c.json({ message: "Failed to Login. Invalid Credential!" }, 400);
       }
 
       const token = signToken({ id: existingUser.id });
